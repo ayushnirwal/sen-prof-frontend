@@ -1,0 +1,7 @@
+export const LOGIN_SUCCESS ="LOGIN_SUCESS"
+export const LOGIN_FAIL ="LOGIN_FAIL"
+export const LOAD_TOKEN ="LOAD_TOKEN"
+export const LOGOUT ="LOGOUT"
+export const GET_QR_SUCCESS ="GET_QR_SUCCESS"
+export const GET_QR_FAIL ="GET_QR_FAIL"
+export const GET_STATS = "GET_STATS"

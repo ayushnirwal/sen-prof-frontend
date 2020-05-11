@@ -1,0 +1,15 @@
+
+.attendance-bar-above{
+    width: 200px;
+    height: 20px;
+    background-color: green;
+    display: inline-flex;
+    
+}
+.attendance-bar-below{
+    width: 200px;
+    height: 20px;
+    background-color: red;
+    display: inline-flex;
+    
+}

@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
+import React,{Component} from 'react'
+import { connect } from 'react-redux';
+import './App.css'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,Switch
+} from 'react-router-dom'
+import {loadToken,logout} from './state-magement/actions/actions'
+
+import Login from './components/Login'
+import PrivateRoute from './components/PrivateRoute'
+import Main from './components/Main'
+import Header from './components/Header'
+import Home from './components/Home'
+
+
+class App extends Component{
+  componentWillMount =()=>{
+    this.props.loadToken()
+  }
+  isLogin=()=>{
+    if(localStorage.getItem("token")==null)
+    return false;
+    else
+    return true
+  }
+
+  render(){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <Header isLogin={this.isLogin} />
+      <Switch>
+      
+        <PrivateRoute path='/main' isLogin={this.isLogin} component={Main} />
+        <Route path="/login"  component={Login}/>
+        <Route path="/"  component={Home}/>
+        
+    
+      </Switch>
+    </Router>
+  ) 
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  token:state.reducer1
+});
+
+export default connect(mapStateToProps,{loadToken,logout}) (App)

@@ -1,0 +1,70 @@
+:root{
+    --width:257;
+    --height:490;
+}
+
+#phone-container{
+    opacity: 1;
+    width: fit-content;
+    animation: move 3.5s infinite;
+    position: relative;
+    z-index: 1;
+}
+
+#qr{
+    opacity: 0;
+    animation: appear 3.5s infinite;
+}
+
+#notification{
+    opacity: 1;
+    animation: pop-up 3.5s infinite;
+}
+#QR-container{
+    width: fit-content;
+    transform: translate(900px,-420px);
+    
+}
+
+@keyframes move{
+    0%{
+        transform: translate(700px,00px);
+    }
+    
+    70%{
+        transform: translate(850px,00px);
+    }
+    100%{
+        transform: translate(850px,00px);
+    }
+
+}
+
+@keyframes appear{
+    0%{
+      opacity: 0;  
+    }
+    50%{
+        opacity: 0;
+    }
+    80%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+@keyframes pop-up{
+    0%{
+        opacity: 0;  
+    }
+    80%{
+        opacity: 0;
+    }
+    90%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 1;
+    }
+}

@@ -1,0 +1,49 @@
+.container{
+    width :400px;
+    height: 500px;
+    border-radius: 4px;
+    margin: 100px auto;
+    animation: bring-up 1s forwards;
+    background-color: white;
+}
+.container h2{
+    text-align: center;
+    color: cadetblue;
+    padding-top:50px;
+    margin-bottom: 50px;
+}
+.form input{
+    width: 300px;
+    height: 30px;
+    margin: 20px 50px;
+    padding: 0;
+    font-size: 1rem;
+    border: 2px solid #666;
+    padding: 3px;
+    border-radius: 4px;
+}
+.form input:focus{
+    border: 2px solid cadetblue;
+}
+.form button{
+    width: 200px;
+    margin-top: 100px;
+    height: 40px;
+    font-size: 1.2rem;
+    margin-left: 100px;
+    background-color: cadetblue;
+    border:none;
+    color: white;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+@keyframes bring-up{
+    0%{
+        box-shadow: 0px 0px 0px #333;
+    }
+
+    100%{
+        box-shadow: 0px 0px 13px #333;
+    }
+}
