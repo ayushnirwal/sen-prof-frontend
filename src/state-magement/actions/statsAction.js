@@ -20,6 +20,7 @@ export function getStat(username){
             .then(response => response.json())
 
             .then(json=>{
+                console.log(json)
                 dispatch({
                     type:GET_STATS,
                     payload:{

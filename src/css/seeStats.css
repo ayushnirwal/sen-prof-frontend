@@ -1,15 +1,41 @@
 
-.attendance-bar-above{
-    width: 200px;
-    height: 20px;
-    background-color: green;
-    display: inline-flex;
-    
+.Graph-Heading{
+    font-weight: bold;
+    font-size: 32px;
+    text-align:center;
+    margin: 0 auto;
 }
-.attendance-bar-below{
-    width: 200px;
-    height: 20px;
+.Graph{
+    margin:0 auto;
+}
+.custom-tooltip{
+    background-color: white;
+    padding: 20px;
+}
+.close-btn{
+    float:right;
     background-color: red;
-    display: inline-flex;
-    
+    padding:4px;
+    font-weight: bold;
+    font-size: 22px;
+    cursor: pointer;
+}
+.Attrec-container{
+    position: absolute;
+    width: 1000px;
+    height: 700px;
+    background-color: white;
+    left: calc(50% - 500px);
+    top: calc(50% - 350px);
+    box-shadow: 2px 2px 50px black;
+    display: none;
+    animation:appear 1s ;
+}
+@keyframes appear{
+    0%{
+        visibility: hidden;
+    }
+    100%{
+        visibility: visible; 
+    }
 }
