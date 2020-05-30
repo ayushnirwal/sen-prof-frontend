@@ -4,7 +4,7 @@ import {LOGIN_FAIL, LOGIN_SUCCESS,LOAD_TOKEN,LOGOUT,GET_QR_FAIL,GET_QR_SUCCESS} 
 
 export function login(username,password) {
   return dispatch =>
-  fetch("http://localhost:8000/auth/login", { 
+  fetch("https://sen-react.herokuapp.com/auth/login", { 
       
     // Adding method type 
     method: "POST", 
@@ -85,7 +85,7 @@ export function logout(){
 
 export function getQR(course) {
   return dispatch =>
-  fetch("http://localhost:8000/getQR", { 
+  fetch("https://sen-react.herokuapp.com/getQR", { 
       
                 // Adding method type 
                 method: "POST", 

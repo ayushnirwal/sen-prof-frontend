@@ -2,7 +2,7 @@ import {GET_STATS} from './types'
 
 export function getStat(username){
     return dispatch =>{
-        fetch("http://localhost:8000/getStats", { 
+        fetch("https://sen-react.herokuapp.com/getStats", { 
       
                 // Adding method type 
                 method: "POST", 
