@@ -9,7 +9,7 @@ export class Header extends Component {
             return (
                 <div className="navbar">
                     <Link   className="navlinks" 
-                                to ="/login"
+                                to ="/"
                         >
                             HOME
                     </Link>
