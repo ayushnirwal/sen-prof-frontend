@@ -88,6 +88,37 @@ app.get('/status',function(req,res,next){
     })
 
 });
+app.post('/getAttrec',function(req,res,next){
+ 
+    const course = req.body.course
+    const low = req.body.low
+    const high = req.body.high
+    
+    
+    
+    
+    res.json({
+        course,
+        low,
+        high,
+        data:[
+            {
+                id:"201701001",
+                attended:2,
+            },
+            {
+                id:"201701002",
+                attended:3,
+            },
+            {
+                id:"201701003",
+                attended:4,
+            }
+        ]
+    })
+
+});
+
 
 
 
