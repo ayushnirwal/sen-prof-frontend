@@ -4,6 +4,7 @@ import { getStat } from '../../state-magement/actions/statsAction'
 import '../../css/seeStats.css'
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend } from 'recharts';
 import AttRec from './AttRec';
+import {getAtt} from '../../state-magement/actions/AttRec'
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
@@ -21,7 +22,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export class seeStats extends Component {
     getStat = () => {
-        this.props.getStat()
+        
+        this.props.getStat(this.props.token)
     }
     componentWillMount = () => {
         this.getStat();
@@ -31,6 +33,24 @@ export class seeStats extends Component {
         const Att = document.getElementById("Attrec-container");
         graphs.style.display = "none";
         Att.style.display = "block";
+        const course = e.activePayload[0].payload.course;
+        const name = e.activePayload[0].payload.name;
+        let low='';
+        let high='';
+        let i=0;
+        while(name[i]!='%'){
+            low+=name[i];
+            i++;
+        }
+        i+=5; // offset + sapce + t + o + space
+        while(name[i]!='%'){
+            high+=name[i];
+            i++;
+        }
+
+        // request to fetch data
+        this.props.getAtt(course,parseInt(low),parseInt(high))
+        // put in redux
         
     }
 
@@ -50,7 +70,7 @@ export class seeStats extends Component {
 
                     return {
 
-                        name: ((index-1 + 1) * 10).toString() + '%' + " to " +((index + 1) * 10).toString() + '%', students: number,
+                        name: ((index-1 + 1) * 10).toString() + '%' + " to " +((index + 1) * 10).toString() + '%', students: number,course:obj.course
 
                     }
                 })
@@ -58,7 +78,7 @@ export class seeStats extends Component {
                     <div key={obj.course}>
 
                         <div className="Graph-Heading" > {obj.course} </div>
-                        <BarChart onClick={this.graphClick} className="Graph" width={1500} height={250} data={data}>
+                        <BarChart onClick={this.graphClick} className="Graph" width={1500} height={250} data={data} course={obj.course}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
@@ -91,4 +111,4 @@ const mapStateToProps = (state) => ({
 });
 
 
-export default connect(mapStateToProps, { getStat })(seeStats)
+export default connect(mapStateToProps, { getStat,getAtt })(seeStats)

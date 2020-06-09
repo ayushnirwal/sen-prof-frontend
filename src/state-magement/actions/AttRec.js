@@ -1,15 +1,17 @@
-import {GET_STATS} from './types'
+import {GET_ATTREC} from './types'
 
-export function getStat(token){
+export function getAtt(course,low,high){
     return dispatch =>{
-        fetch("https://sen-react.herokuapp.com/getStats", { 
+        fetch("https://sen-react.herokuapp.com/getAttrec", { 
       
                 // Adding method type 
                 method: "POST", 
                 
                 // Adding body or contents to send 
                 body: JSON.stringify({ 
-                proftoken:token
+                    course,
+                    low,
+                    high
                 }), 
                 
                 // Adding headers to the request 
@@ -21,7 +23,7 @@ export function getStat(token){
 
             .then(json=>{
                 dispatch({
-                    type:GET_STATS,
+                    type:GET_ATTREC,
                     payload:{
                         data : json
                     }

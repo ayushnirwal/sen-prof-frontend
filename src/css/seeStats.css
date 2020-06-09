@@ -39,3 +39,34 @@
         visibility: visible; 
     }
 }
+.table-container{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    
+}
+.table-heading{
+    background-color: bisque;
+    font-size: 22px;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px;
+    border: 2px solid black;
+}
+.table-content{
+    font-size: 18px;
+    text-align: center;
+    padding:10px;
+    background-color: cadetblue;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}
+.heading{
+    background-color: #999;
+    padding: 20px;
+    text-align: center;
+    font-size: 28px;
+    border-top: 2px solid black;
+    border-left: 2px solid black;
+    border-right: 2px solid black;
+}

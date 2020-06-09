@@ -45,5 +45,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://locahost:8000"
+  "proxy": "https://sen-react.herokuapp.com/"
 }
