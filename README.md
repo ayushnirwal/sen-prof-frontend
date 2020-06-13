@@ -1,4 +1,4 @@
-install dependencies - npm i \n
-build project - npm run build \n
-start server - node server.js \n
+install dependencies - npm i  
+build project - npm run build  
+start server - node server.js  
 
