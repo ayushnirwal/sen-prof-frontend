@@ -27,6 +27,7 @@ export class seeStats extends Component {
     }
     componentWillMount = () => {
         this.getStat();
+    
     }
     graphClick = (e) => {
         const graphs = document.getElementById("Graphs-Container");
@@ -53,6 +54,7 @@ export class seeStats extends Component {
         // put in redux
         
     }
+    
 
     render() {
         let data = undefined

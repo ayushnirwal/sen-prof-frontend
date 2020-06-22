@@ -9,6 +9,9 @@ export class takeAttendance extends Component {
         course:'',
         msg:''
     }
+    componentWillMount = () =>{
+        this.getCourses();
+    }
     handleSelect=(e)=>{
         this.setState({
             course:e.target.value
@@ -29,43 +32,68 @@ export class takeAttendance extends Component {
             this.setState({
                 msg:""
             })
-
-            const id = setInterval(()=>{
-
-                this.props.getQR(this.state.course)
-                const canvas = document.getElementById('canvas');
-
-                if(this.props.code != undefined){
-                    this.setState({
-                        msg:""
-                    })
-                    QRCode.toCanvas(canvas, this.state.course + this.props.code,{width:250,height:250 }, function (error) {
-                        if (error) console.error(error)
-    
-                    })    
-                }
-                else{
-                    setTimeout(() => {
-                        this.setState({
-                            msg:"Server error"
-                        })    
-                    }, 1000);
-                    
-                }
-
+            fetch("http://127.0.0.1:8000/prof/createLecInstance", { 
+      
+                // Adding method type 
+                method: "POST", 
                 
+                // Adding body or contents to send 
+                body: JSON.stringify({ 
+                token: localStorage.getItem("token"),
+                course:this.state.course
+                }), 
+                
+                // Adding headers to the request 
+                headers: { 
+                    "Content-type": "application/json; charset=UTF-8"
+                } 
+            }) 
+            
+            // Converting to JSON 
+            .then(response => response.json()) 
 
+            .then(( json ) => {
+                this.setState({
+                    hash:json.hash
+                })
+                const id = setInterval(()=>{
 
-            },1000)
-
-            this.setState({
-                id:id
+                    this.props.getQR(this.state.course,this.state.hash)
+                    const canvas = document.getElementById('canvas');
+                    
+                    if(this.props.code != undefined){
+                        this.setState({
+                            msg:""
+                        })
+                        QRCode.toCanvas(canvas,this.props.code,{width:250,height:250 }, function (error) {
+                            if (error) console.error(error)
+        
+                        })    
+                    }
+                    else{
+                        setTimeout(() => {
+                            this.setState({
+                                msg:"Server error"
+                            })    
+                        }, 1000);
+                        
+                    }
+    
+                    
+    
+    
+                },1000)
+    
+                this.setState({
+                    id:id
+                })
             })
+            
         }
         
     }
         
-    handleStop = ()=>{
+    handleEnd = ()=>{
         clearInterval(this.state.id);
         this.setState({
             id:undefined,
@@ -75,9 +103,83 @@ export class takeAttendance extends Component {
         canvas.width=0;
     }
 
+    handleCancel = () =>{
+        fetch("http://127.0.0.1:8000/prof/delLecInstance", { 
+      
+                // Adding method type 
+                method: "POST", 
+                
+                // Adding body or contents to send 
+                body: JSON.stringify({ 
+                token: localStorage.getItem("token"),
+                course:this.state.course
+                }), 
+                
+                // Adding headers to the request 
+                headers: { 
+                    "Content-type": "application/json; charset=UTF-8"
+                } 
+            }) 
+            
+            // Converting to JSON 
+            .then(response => response.json()) 
+            
+            // Displaying results to console 
+            .then(json => {
+                this.setState({
+                    course:undefined
+                })
+                clearInterval(this.state.id);
+            this.setState({
+                id:undefined,
+                code:null
+            })
+            const canvas = document.getElementById('canvas');
+            canvas.width=0;
+            }).catch(e=>console.log(e))
+    }
+
+    getCourses = () => {
+        fetch("http://127.0.0.1:8000/prof/getCourseList", { 
+      
+                // Adding method type 
+                method: "POST", 
+                
+                // Adding body or contents to send 
+                body: JSON.stringify({ 
+                token: localStorage.getItem("token")
+                }), 
+                
+                // Adding headers to the request 
+                headers: { 
+                    "Content-type": "application/json; charset=UTF-8"
+                } 
+            }) 
+            
+            // Converting to JSON 
+            .then(response => response.json()) 
+            
+            // Displaying results to console 
+            .then(json => {
+                this.setState({
+                    courses:json.courses,
+                    course:json.courses[0]
+                })
+            }).catch(e=>console.log(e))
+    }
     
     render() {
         let buttons;
+        let choices;
+
+        if(this.state.courses!=undefined){
+            
+            choices = this.state.courses.map( (course)=>{
+                return(
+                    <option value={course}>{course}</option>
+                )
+            })
+        }
         
         if(this.state.id == undefined)
             buttons = (
@@ -86,8 +188,8 @@ export class takeAttendance extends Component {
         else
             buttons = (
                 <div>
-                    
-                    <button onClick={this.handleStop} className="btn">Stop Attendance</button>
+                    <button onClick={this.handleCancel} className="btn">Cancel Attendance</button>
+                    <button onClick={this.handleEnd} className="btn">End Attendance</button>
                 </div>
             )
         return (
@@ -95,9 +197,7 @@ export class takeAttendance extends Component {
                  <label className="label" for="cars">Choose Course:</label>
 
                     <select onChange={this.handleSelect} name ="course" id="course">
-                        <option value="HC123">HC123</option>
-                        <option value="SM123">SM123</option>
-                        <option value="IT123">IT123</option>
+                        {choices}
                     </select> 
                     <p className="msg">{this.state.msg}</p>
                     <canvas id="canvas"></canvas>
