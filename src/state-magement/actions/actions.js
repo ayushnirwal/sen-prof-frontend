@@ -4,7 +4,7 @@ import {LOGIN_FAIL, LOGIN_SUCCESS,LOAD_TOKEN,LOGOUT,GET_QR_FAIL,GET_QR_SUCCESS} 
 
 export function login(username,password) {
   return dispatch =>
-  fetch("https://sen-react.herokuapp.com/auth/login", { 
+  fetch("http://127.0.0.1:8000/prof/login", { 
       
     // Adding method type 
     method: "POST", 
@@ -26,7 +26,9 @@ export function login(username,password) {
   
 // Displaying results to console 
 .then(json => {
+
   if(json.token == undefined){
+    
     dispatch( { 
       type: LOGIN_FAIL,
       payload: {
@@ -51,7 +53,6 @@ export function login(username,password) {
 export function loadToken(){
   return dispatch=>{
     const token = localStorage.getItem("token")
-
     if(token!= undefined){
       dispatch( { 
         type: LOAD_TOKEN,
@@ -67,9 +68,27 @@ export function loadToken(){
 }
 
 export function logout(){
+  
   window.location = "/"
+  const token = localStorage.getItem("token")
+  localStorage.removeItem("token")
+  fetch("http://127.0.0.1:8000/prof/logout", { 
+      
+    // Adding method type 
+    method: "POST", 
+      
+    // Adding body or contents to send 
+    body: JSON.stringify({ 
+        token
+    }), 
+      
+    // Adding headers to the request 
+    headers: { 
+        "Content-type": "application/json; charset=UTF-8"
+    } 
+}).then(()=>{
   return dispatch=>{
-    localStorage.removeItem("token")
+    
 
     
       dispatch( { 
@@ -80,19 +99,25 @@ export function logout(){
     }) 
     
   }
+  
+})
+
+  
 }
 
 
-export function getQR(course) {
+export function getQR(course,hash) {
   return dispatch =>
-  fetch("https://sen-react.herokuapp.com/getQR", { 
+  fetch("http://127.0.0.1:8000/prof/getQR", { 
       
                 // Adding method type 
                 method: "POST", 
                 
                 // Adding body or contents to send 
                 body: JSON.stringify({ 
-                course:course 
+                token:localStorage.getItem("token"),
+                course,
+                hash
                 }), 
                 
                 // Adding headers to the request 
@@ -107,14 +132,15 @@ export function getQR(course) {
             // Displaying results to console 
             .then(json => {
 
-                if(json.code == undefined){
+                if(json.qr == undefined){
                     console.log(json) 
                 }
                 else{
+                  
                   dispatch( { 
                     type: GET_QR_SUCCESS,
                     payload: {
-                        code:json.code
+                        code:json.qr
                     }
                 }) 
                 }

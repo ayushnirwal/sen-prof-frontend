@@ -13,8 +13,8 @@ export class AttRec extends Component {
     }
     render() {
         let table = undefined
-        if(this.props.AttData.AttData!= undefined){
-            table = this.props.AttData.AttData.data.map((obj)=>{
+        if(this.props.AttData!= undefined){
+            table = this.props.AttData.data.map((obj)=>{
                 return (
                     <div key={obj.id} className="table-container">
                         <div className="table-content">{obj.id}</div>
@@ -24,11 +24,11 @@ export class AttRec extends Component {
             })
         }
         let heading = undefined;
-        if(this.props.AttData.AttData!= undefined){
+        if(this.props.AttData!= undefined){
             heading = (
                 <div>
                     <div className="heading"> 
-                    <p>Students in <b>{this.props.AttData.AttData.course}</b> - Attendance between <b>{this.props.AttData.AttData.low}%</b> and <b>{this.props.AttData.AttData.high}%</b></p>
+                    <p>Students in <b>{this.props.AttData.course}</b> - Attendance between <b>{this.props.AttData.low}%</b> and <b>{this.props.AttData.high}%</b></p>
                          
                     </div>
                 </div>
@@ -57,6 +57,6 @@ export class AttRec extends Component {
     }
 }
 const mapStateToProps = (state) => ({
-    AttData:state.AttReducer
+    AttData:state.AttReducer.data
   });
 export default connect(mapStateToProps,{getAtt}) (AttRec)
