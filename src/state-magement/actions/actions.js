@@ -53,7 +53,6 @@ export function login(username,password) {
 export function loadToken(){
   return dispatch=>{
     const token = localStorage.getItem("token")
-    console.log(token)
     if(token!= undefined){
       dispatch( { 
         type: LOAD_TOKEN,

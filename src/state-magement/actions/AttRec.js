@@ -2,16 +2,14 @@ import {GET_ATTREC} from './types'
 
 export function getAtt(course,low,high){
     return dispatch =>{
-        fetch("https://sen-react.herokuapp.com/getAttrec", { 
+        fetch("http://127.0.0.1:8000/prof/getStats", { 
       
                 // Adding method type 
                 method: "POST", 
                 
                 // Adding body or contents to send 
                 body: JSON.stringify({ 
-                    course,
-                    low,
-                    high
+                    token:localStorage.getItem("token")
                 }), 
                 
                 // Adding headers to the request 
@@ -22,10 +20,38 @@ export function getAtt(course,low,high){
             .then(response => response.json())
 
             .then(json=>{
+                let data = undefined;
+                let total = undefined;
+                let dataArray = [];
+                data = json[course]
+                total = data["total"]
+
+                Object.keys(data).map((key,i)=>{
+                    if(key != "total"){
+                        dataArray.push(
+                            {
+                                "id":key,
+                                "attended":data[key]
+                            }
+                        )
+                    }
+                })
+
+                data = {
+                    course,
+                    low,
+                    high,
+                    "data":dataArray
+                }
+
+                
+
+                
+
                 dispatch({
                     type:GET_ATTREC,
                     payload:{
-                        data : json
+                        data : data
                     }
                 })
             })

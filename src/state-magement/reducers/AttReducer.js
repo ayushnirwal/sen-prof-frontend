@@ -9,7 +9,7 @@ export default (state = initialState, action) => {
     case GET_ATTREC:
       return {
         ...state,
-        AttData:action.payload.data
+        data:action.payload.data
       };
     default:
       return state;

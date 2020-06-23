@@ -58,35 +58,64 @@ export class seeStats extends Component {
 
     render() {
         let data = undefined
-
+        let printthis = undefined
+        let total = undefined
+        let percentArray=[0,0,0,0,0,0,0,0,0,0]
         if (this.props.data != undefined) {
 
-            //let i=0;
-            //while(this.props.data[i]!= undefined){
-            //    data = data + "<p>"+this.props.data[i].course+ "</p> <p> " + this.props.data[i].above + "</p> <p> " + this.props.data[i].below+"\n";
-            //    i++;
-            //}
+            
 
-            data = this.props.data.data.map((obj) => {
-                const data = obj.curve.map((number, index) => {
-
-                    return {
-
-                        name: ((index-1 + 1) * 10).toString() + '%' + " to " +((index + 1) * 10).toString() + '%', students: number,course:obj.course
-
+            printthis= Object.keys(this.props.data).map((key,i) =>{
+                percentArray=[0,0,0,0,0,0,0,0,0,0]
+                Object.keys(this.props.data[key]).map((key1,i)=>{
+                    
+                    if(key1 == "total"){
+                        total = this.props.data[key][key1]
+                        
+                    }
+                    else{
+                        
+                        let percent  = (this.props.data[key][key1] / total)*10
+                        for(let i=0;i<9;i++){
+                            
+                            if( percent >= i  && percent < i+1 ){
+                                percentArray[i-1]++;
+                                break;
+                            }
+                        }
+                        if(percent == 10){
+                            percentArray[9]++;
+                        }
+                        if(percent == 0){
+                            percentArray[0]++;
+                        }
+                        
                     }
                 })
-                return (
-                    <div key={obj.course}>
 
-                        <div className="Graph-Heading" > {obj.course} </div>
-                        <BarChart onClick={this.graphClick} className="Graph" width={1500} height={250} data={data} course={obj.course}>
+                data = percentArray.map((no , i)=>{
+                    let name = ( (i*10).toString(10) + "% to " + ((i+1)*10).toString(10) +"%")
+                    return{
+                        course:key,
+                        name,
+                        "number of students" : no
+                    }
+                })
+                const course = key
+                
+                
+
+                return(
+                    <div key={key}>
+
+                        <div className="Graph-Heading" > {course} </div>
+                        <BarChart onClick={this.graphClick} className="Graph" width={1500} height={250} data={data} course ={key}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
                             <Legend />
                             <Tooltip content={<CustomTooltip />} />
-                            <Bar dataKey="students" fill="#8884d8" />
+                            <Bar dataKey="number of students" fill="#8884d8" />
 
                         </BarChart>
 
@@ -94,13 +123,20 @@ export class seeStats extends Component {
 
                     </div>
                 )
+                
+                
             })
+            
+            
+            
+                
+            }
 
-        }
+        
 
         return (
             <div>
-                <div id="Graphs-Container">{data}</div>
+                <div id="Graphs-Container">{printthis}</div>
                 <AttRec id = "AttRec"/>
             </div>
         )
