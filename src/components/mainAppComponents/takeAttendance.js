@@ -140,7 +140,7 @@ export class takeAttendance extends Component {
     }
 
     getCourses = () => {
-        fetch("http://127.0.0.1:8000/prof/getCourseList", { 
+        fetch("https://sen-backend.herokuapp.com/getCourseList", { 
       
                 // Adding method type 
                 method: "POST", 
