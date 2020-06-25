@@ -12,6 +12,7 @@ export class Login extends Component {
     handleSubmit=(e)=>{
         e.preventDefault();
         this.props.login(this.state.username,this.state.password);
+        console.log(username,password)
     }
 
     handleChange=(e)=>{
