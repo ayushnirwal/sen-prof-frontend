@@ -161,8 +161,11 @@ export class takeAttendance extends Component {
             
             // Displaying results to console 
             .then(json => {
+                console.log(json.courses[0])
                 this.setState({
                     courses:json.courses,
+                    course:json.courses[0]
+
                     
                 })
             }).catch(e=>console.log(e))
