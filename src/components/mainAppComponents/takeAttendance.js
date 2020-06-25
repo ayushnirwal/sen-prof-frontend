@@ -163,6 +163,7 @@ export class takeAttendance extends Component {
             .then(json => {
                 this.setState({
                     courses:json.courses,
+                    course:json.courses[0]
                     
                 })
             }).catch(e=>console.log(e))
