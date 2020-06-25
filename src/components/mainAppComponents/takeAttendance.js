@@ -32,7 +32,7 @@ export class takeAttendance extends Component {
             this.setState({
                 msg:""
             })
-            fetch("http://127.0.0.1:8000/prof/createLecInstance", { 
+            fetch("https://sen-backend.herokuapp.com/prof/createLecInstance", { 
       
                 // Adding method type 
                 method: "POST", 
@@ -75,7 +75,7 @@ export class takeAttendance extends Component {
                             this.setState({
                                 msg:"Server error"
                             })    
-                        }, 1000);
+                        }, 5000);
                         
                     }
     
@@ -104,7 +104,7 @@ export class takeAttendance extends Component {
     }
 
     handleCancel = () =>{
-        fetch("http://127.0.0.1:8000/prof/delLecInstance", { 
+        fetch("https://sen-backend.herokuapp.com/prof/delLecInstance", { 
       
                 // Adding method type 
                 method: "POST", 
@@ -163,7 +163,7 @@ export class takeAttendance extends Component {
             .then(json => {
                 this.setState({
                     courses:json.courses,
-                    course:json.courses[0]
+                    
                 })
             }).catch(e=>console.log(e))
     }
