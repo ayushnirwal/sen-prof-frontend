@@ -4,7 +4,7 @@ import {LOGIN_FAIL, LOGIN_SUCCESS,LOAD_TOKEN,LOGOUT,GET_QR_FAIL,GET_QR_SUCCESS} 
 
 export function login(username,password) {
   return dispatch =>
-  fetch("http://127.0.0.1:8000/prof/login", { 
+  fetch("https://sen-backend.herokuapp.com/prof/login", { 
       
     // Adding method type 
     method: "POST", 
@@ -72,7 +72,7 @@ export function logout(){
   window.location = "/"
   const token = localStorage.getItem("token")
   localStorage.removeItem("token")
-  fetch("http://127.0.0.1:8000/prof/logout", { 
+  fetch("https://sen-backend.herokuapp.com/prof/logout", { 
       
     // Adding method type 
     method: "POST", 
@@ -108,7 +108,7 @@ export function logout(){
 
 export function getQR(course,hash) {
   return dispatch =>
-  fetch("http://127.0.0.1:8000/prof/getQR", { 
+  fetch("https://sen-backend.herokuapp.com/prof/getQR", { 
       
                 // Adding method type 
                 method: "POST", 
