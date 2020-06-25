@@ -43,10 +43,12 @@ export function login(username,password) {
       payload: {
           token:json.token
       }
-  }) 
+    }) 
+  window.location="/main"
   }
 }).then(()=>{
-  window.location="/main"
+
+  
 })
 }
 
