@@ -30,6 +30,7 @@ export class Login extends Component {
             <div className="container">
 
                 <h2>LOGIN</h2>
+                <p className="warning"> {this.props.msg} </p>
                 <form className="form" onSubmit={this.handleSubmit} >
                     <input onChange={this.handleChange} name="username" type="text" placeholder="Username"/>
                     <input onChange={this.handleChange} name="password" type="password" placeholder="Password"/>

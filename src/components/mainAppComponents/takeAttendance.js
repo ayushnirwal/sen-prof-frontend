@@ -24,7 +24,7 @@ export class takeAttendance extends Component {
         {
             
             this.setState({
-                msg:"plz select a course"
+                msg:"please select a course"
             })
         }
 
@@ -72,9 +72,11 @@ export class takeAttendance extends Component {
                     }
                     else{
                         setTimeout(() => {
-                            this.setState({
-                                msg:"Server error"
-                            })    
+                            if(this.props.code == undefined){
+                                this.setState({
+                                    msg:"Server error"
+                                })  
+                            }  
                         }, 5000);
                         
                     }

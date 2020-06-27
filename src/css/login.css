@@ -37,6 +37,12 @@
     font-weight: bold;
     border-radius: 4px;
 }
+.warning{
+    color: red;
+    text-align: center;
+    font-weight: bold;
+    font-size:22px;
+}
 
 @keyframes bring-up{
     0%{
