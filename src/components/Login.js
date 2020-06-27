@@ -4,9 +4,42 @@ import { connect } from 'react-redux';
 import {login} from '../state-magement/actions/actions'
 
 export class Login extends Component {
-
+  Password_verification(password) {
+    if (password.length <= 7) {
+      return false;
+    }
+    var passwords = new Array();
+    passwords.push("[!@#$%^&*]");
+    passwords.push("[A-Z]");
+    passwords.push("[0-9]");
+    passwords.push("[a-z]");
+    var count = 0;
+    for (var i = 0; i < passwords.length; i++) {
+      if (new RegExp(passwords[i]).test(password)) {
+        count++;
+      }
+    }
+    var correct = "";
+    switch (count) {
+      case 0:
+      case 1:
+        correct="Not Accepted";
+        break;
+      case 2:
+        correct = "Accepted";
+        break;
+      case 3:
+        correct = "Accepted";
+        break;
+      case 4:
+        correct = "Accepted";
+        break;
+    }
+    if (correct === "Accepted") return true;
+    else return false;
+  }
     state={
-        
+
     }
 
     handleSubmit=(e)=>{
@@ -19,7 +52,7 @@ export class Login extends Component {
         change[e.target.name] = e.target.value
         this.setState(change)
 
-        
+
         // send request to server to provide token
         // update global state
         //redirect to home
