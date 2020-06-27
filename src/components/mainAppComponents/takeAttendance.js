@@ -16,15 +16,15 @@ export class takeAttendance extends Component {
         this.setState({
             course:e.target.value
         })
-        
+
     }
     handleSubmit=()=>{
 
         if(this.state.course == '' )
         {
-            
+
             this.setState({
-                msg:"plz select a course"
+                msg:"please select a course"
             })
         }
 
@@ -32,25 +32,25 @@ export class takeAttendance extends Component {
             this.setState({
                 msg:""
             })
-            fetch("https://sen-backend.herokuapp.com/prof/createLecInstance", { 
-      
-                // Adding method type 
-                method: "POST", 
-                
-                // Adding body or contents to send 
-                body: JSON.stringify({ 
+            fetch("https://sen-backend.herokuapp.com/prof/createLecInstance", {
+
+                // Adding method type
+                method: "POST",
+
+                // Adding body or contents to send
+                body: JSON.stringify({
                 token: localStorage.getItem("token"),
                 course:this.state.course
-                }), 
-                
-                // Adding headers to the request 
-                headers: { 
+                }),
+
+                // Adding headers to the request
+                headers: {
                     "Content-type": "application/json; charset=UTF-8"
-                } 
-            }) 
-            
-            // Converting to JSON 
-            .then(response => response.json()) 
+                }
+            })
+
+            // Converting to JSON
+            .then(response => response.json())
 
             .then(( json ) => {
                 this.setState({
@@ -60,39 +60,41 @@ export class takeAttendance extends Component {
 
                     this.props.getQR(this.state.course,this.state.hash)
                     const canvas = document.getElementById('canvas');
-                    
+
                     if(this.props.code != undefined){
                         this.setState({
                             msg:""
                         })
                         QRCode.toCanvas(canvas,this.props.code,{width:250,height:250 }, function (error) {
                             if (error) console.error(error)
-        
-                        })    
+
+                        })
                     }
                     else{
                         setTimeout(() => {
-                            this.setState({
-                                msg:"Server error"
-                            })    
+                            if(this.props.code == undefined){
+                                this.setState({
+                                    msg:"Server error"
+                                })
+                            }
                         }, 5000);
-                        
+
                     }
-    
-                    
-    
-    
+
+
+
+
                 },1000)
-    
+
                 this.setState({
                     id:id
                 })
             })
-            
+
         }
-        
+
     }
-        
+
     handleEnd = ()=>{
         clearInterval(this.state.id);
         this.setState({
@@ -104,27 +106,27 @@ export class takeAttendance extends Component {
     }
 
     handleCancel = () =>{
-        fetch("https://sen-backend.herokuapp.com/prof/delLecInstance", { 
-      
-                // Adding method type 
-                method: "POST", 
-                
-                // Adding body or contents to send 
-                body: JSON.stringify({ 
+        fetch("https://sen-backend.herokuapp.com/prof/delLecInstance", {
+
+                // Adding method type
+                method: "POST",
+
+                // Adding body or contents to send
+                body: JSON.stringify({
                 token: localStorage.getItem("token"),
                 course:this.state.course
-                }), 
-                
-                // Adding headers to the request 
-                headers: { 
+                }),
+
+                // Adding headers to the request
+                headers: {
                     "Content-type": "application/json; charset=UTF-8"
-                } 
-            }) 
-            
-            // Converting to JSON 
-            .then(response => response.json()) 
-            
-            // Displaying results to console 
+                }
+            })
+
+            // Converting to JSON
+            .then(response => response.json())
+
+            // Displaying results to console
             .then(json => {
                 this.setState({
                     course:undefined
@@ -140,48 +142,48 @@ export class takeAttendance extends Component {
     }
 
     getCourses = () => {
-        fetch("https://sen-backend.herokuapp.com/prof/getCourseList", { 
-      
-                // Adding method type 
-                method: "POST", 
-                
-                // Adding body or contents to send 
-                body: JSON.stringify({ 
+        fetch("https://sen-backend.herokuapp.com/prof/getCourseList", {
+
+                // Adding method type
+                method: "POST",
+
+                // Adding body or contents to send
+                body: JSON.stringify({
                 token: localStorage.getItem("token")
-                }), 
-                
-                // Adding headers to the request 
-                headers: { 
+                }),
+
+                // Adding headers to the request
+                headers: {
                     "Content-type": "application/json; charset=UTF-8"
-                } 
-            }) 
-            
-            // Converting to JSON 
-            .then(response => response.json()) 
-            
-            // Displaying results to console 
+                }
+            })
+
+            // Converting to JSON
+            .then(response => response.json())
+
+            // Displaying results to console
             .then(json => {
                 this.setState({
                     courses:json.courses,
                     course:json.courses[0]
-                    
+
                 })
             }).catch(e=>console.log(e))
     }
-    
+
     render() {
         let buttons;
         let choices;
 
         if(this.state.courses!=undefined){
-            
+
             choices = this.state.courses.map( (course)=>{
                 return(
                     <option value={course}>{course}</option>
                 )
             })
         }
-        
+
         if(this.state.id == undefined)
             buttons = (
                 <button onClick={this.handleSubmit} className="btn">Take Attendance</button>
@@ -199,13 +201,13 @@ export class takeAttendance extends Component {
 
                     <select onChange={this.handleSelect} name ="course" id="course">
                         {choices}
-                    </select> 
+                    </select>
                     <p className="msg">{this.state.msg}</p>
                     <canvas id="canvas"></canvas>
-                    
+
                     <br></br>
                     {buttons}
-                    
+
             </div>
         )
     }
@@ -216,5 +218,3 @@ const mapStateToProps = (state) => ({
   });
 
 export default connect(mapStateToProps,{getQR}) (takeAttendance)
-
-
