@@ -53,11 +53,13 @@ export class takeAttendance extends Component {
             .then(response => response.json()) 
 
             .then(( json ) => {
+                console.log("server sent this = " + json.hash)
                 this.setState({
                     hash:json.hash
                 })
                 const id = setInterval(()=>{
 
+                    console.log("hash = " +this.state.hash)
                     this.props.getQR(this.state.course,this.state.hash)
                     const canvas = document.getElementById('canvas');
                     
@@ -65,6 +67,7 @@ export class takeAttendance extends Component {
                         this.setState({
                             msg:""
                         })
+                        console.log("QR= "+this.props.code)
                         QRCode.toCanvas(canvas,this.props.code,{width:250,height:250 }, function (error) {
                             if (error) console.error(error)
         
@@ -77,14 +80,14 @@ export class takeAttendance extends Component {
                                     msg:"Server error"
                                 })  
                             }  
-                        }, 5000);
+                        }, 3000);
                         
                     }
     
                     
     
     
-                },1000)
+                },2000)
     
                 this.setState({
                     id:id
