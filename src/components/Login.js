@@ -39,7 +39,34 @@ export class Login extends Component {
       if (correct === "Accepted") return true;
       else return false;
     }
-
+    Username_Verification(username)
+    {
+      if(username.length>150) return false;
+      var usernames=new Array();
+      usernames.push("[ ]");
+      usernames.push("[!#$%^&*:]");
+      var count =0;
+      for (var i=0;i<usernames.length;i++)
+      {
+        if(new RegExp(usernames[i]).test(username)){
+          count++;
+        }
+      }
+      var correct="";
+      switch(count){
+        case 0:
+          correct ="Accepted";
+          break;
+        case 1:
+          correct = "Not Accepted";
+          break;
+        case 2:
+          correct = "Not Accepted";
+          break;
+      }
+      if(correct==="Accepted") return true;
+      else return false;
+    }
     state={
 
     }

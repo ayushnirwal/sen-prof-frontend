@@ -29,3 +29,17 @@ it('Invalid password with empty string',() =>{
 
 })
 });
+describe('Test case for testing username',() =>{
+test('Invalid Usernamen with symbols that are not allowed',() =>{
+  const wrapper=shallow(<Login/>)
+  expect(wrapper.instance().Username_Verification('Abhi%^')).toBe(false);
+})
+test("Invalid username with space", () =>{
+  const wrapper =shallow(<Login/>)
+  expect(wrapper.instance().Username_Verification('Abhi %^')).toBe(false);
+})
+test('Valid username',()=>{
+  const wrapper=shallow(<Login/>)
+  expect(wrapper.instance().Username_Verification('Abhi@123')).toBe(true);
+})
+});
