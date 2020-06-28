@@ -36,7 +36,7 @@ test('Invalid Usernamen with symbols that are not allowed',() =>{
 })
 test("Invalid username with space", () =>{
   const wrapper =shallow(<Login/>)
-  expect(wrapper.instance().Username_Verification('Abhi %^')).toBe(false);
+  expect(wrapper.instance().Username_Verification('Abhi 12')).toBe(false);
 })
 test('Valid username',()=>{
   const wrapper=shallow(<Login/>)
